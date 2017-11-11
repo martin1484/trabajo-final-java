@@ -26,23 +26,35 @@ public class MockCowServiceTest {
     @InjectMocks
     private CowServiceImpl cowService;
 
+    private CowDto testCowDto;
+
+    private Cow testCow1;
+
     @Before
     public void setUp() throws Exception {
         DaryProducer daryProducer = new DaryProducer();
         List<Cow> cows = new ArrayList<>();
         daryProducer.setId(1L);
         daryProducer.setName("Beltramino");
-        Cow testCow1 = new Cow();
+
+        testCow1 = new Cow();
         testCow1.setId(1L);
         testCow1.setEarMark(1234L);
         testCow1.setName("Cow Test One");
         testCow1.setDaryProducer(daryProducer);
         cows.add(testCow1);
         cows.add(testCow1);
+
+        testCowDto = new CowDto();
+        testCowDto.setEarMark(testCow1.getEarMark());
+        testCowDto.setDaryProducerId(testCow1.getDaryProducer().getId());
+        testCowDto.setName(testCow1.getName());
+
+
         Mockito.when(cowRepository.findOne(1L)).thenReturn(testCow1);
         Mockito.when(cowRepository.findByEarMark(1234L)).thenReturn(testCow1);
         Mockito.when(cowRepository.findAll()).thenReturn(cows);
-
+        Mockito.when(cowRepository.save(testCow1)).thenReturn(testCow1);
     }
 
     @Test
@@ -60,6 +72,12 @@ public class MockCowServiceTest {
     @Test
     public void findAll() throws Exception {
         assertTrue(cowService.findAll().size() == 2);
+    }
+
+    @Test
+    public void saveOrUpdate() throws Exception {
+        CowDto cowDto = cowService.saveOrUpdate(testCowDto);
+        assertEquals("Expected equals names",testCowDto.getName(),cowDto.getName());
     }
 
 }
