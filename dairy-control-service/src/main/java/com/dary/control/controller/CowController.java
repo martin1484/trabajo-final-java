@@ -1,4 +1,4 @@
-package com.dary.control.contrroller;
+package com.dary.control.controller;
 
 import java.util.List;
 

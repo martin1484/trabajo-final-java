@@ -1,5 +1,6 @@
-package com.dary.control.contrroller;
+package com.dary.control.controller.mock;
 
+import com.dary.control.controller.CowController;
 import com.dary.control.dto.BaseDto;
 import com.dary.control.dto.CowDto;
 import com.dary.control.service.CowService;

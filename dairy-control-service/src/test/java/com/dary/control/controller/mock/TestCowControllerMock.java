@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.dary.control.contrroller.CowController;
+import com.dary.control.controller.CowController;
 import com.dary.control.dto.BaseDto;
 import com.dary.control.dto.CowDto;
 import com.dary.control.service.CowService;
@@ -29,20 +29,20 @@ public class TestCowControllerMock {
 	
 	@Before
 	public void setUp() throws Exception {
-		cows = new ArrayList<BaseDto>();
+		cows = new ArrayList<>();
 		cows.add(new CowDto(Long.valueOf("321"), "Lola"));
 		cows.add(new CowDto(Long.valueOf("123"), "Pepa"));
         MockitoAnnotations.initMocks(this);
-		Mockito.when(cowService.findCowByEarMark(Long.valueOf(123))).thenReturn(new CowDto(Long.valueOf(123), "Pepa"));
+		Mockito.when(cowService.findCowByEarMark(123L)).thenReturn(new CowDto(123L, "Pepa"));
 		Mockito.<List<? extends BaseDto>>when(cowService.findAll()).thenReturn(cows);
 
 	}
 
 	@Test
 	public void testGetCowByEarMark() {
-		CowDto cowDto = controller.getCowByEarMark(Long.valueOf(123));
+		CowDto cowDto = controller.getCowByEarMark(123L);
 		assertEquals("Pepa",cowDto.getName());
-		Mockito.verify(cowService).findCowByEarMark(Long.valueOf(123));
+		Mockito.verify(cowService).findCowByEarMark(123L);
 	}
 	
 	@Test
